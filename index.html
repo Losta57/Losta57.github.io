@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Couple</title>
+    <style>
+        /* Importation de polices Google Fonts pour un look plus doux */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-color: #e0a3a7; /* Rose pâle principal */
+            --secondary-color: #c77b81; /* Rose plus soutenu */
+            --accent-color: #a8dadc; /* Vert-bleu clair pour contraste doux */
+            --text-color: #333;
+            --light-bg: #fdf6f6; /* Fond très clair, presque blanc rosé */
+            --card-bg: #ffffff;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            min-height: 100vh; /* Pour que le footer reste en bas */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky; /* Rendre le header collant */
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Permet à la nav de passer à la ligne sur petits écrans */
+        }
+
+        .site-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8em;
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            white-space: nowrap; /* Empêche le titre de se couper */
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Centrer les éléments sur petits écrans */
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 5px 10px;
+            transition: color 0.3s ease, background-color 0.3s ease, border-radius 0.3s ease;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: var(--primary-color);
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        /* --- Contenu Principal (Sections) --- */
+        main {
+            flex: 1; /* Permet au contenu principal de prendre l'espace disponible */
+            padding: 40px 0;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-top: 20px;
+            color: var(--primary-color);
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-top: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            display: inline-block; /* Pour que la bordure ne prenne pas toute la largeur */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            line-height: 1.7;
+        }
+
+        .section-content { /* Conteneur pour le contenu de chaque section (Histoire, Conseils, Jeux) */
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Styles pour la section Accueil / Notre Histoire */
+        #accueil .section-content {
+            text-align: center;
+            padding: 50px;
+        }
+
+        #accueil .section-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+
+        /* Styles pour la page des conseils */
+        #conseils-section .conseil-card {
+            background-color: #fefefe;
+            border-left: 5px solid var(--accent-color); /* Nouvelle couleur d'accent */
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        #conseils-section .conseil-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        #conseils-section ul {
+            list-style-type: '💖 '; /* Petits cœurs comme puces ! */
+            margin-left: 25px;
+            padding-left: 0;
+        }
+
+        #conseils-section li {
+            margin-bottom: 10px;
+        }
+
+        /* Styles pour la page des jeux */
+        .introduction-jeux {
+            text-align: center;
+            font-size: 1.2em;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px; /* Un peu de padding latéral */
+        }
+
+        .game-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative; /* Pour le bouton "Jouer" */
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .game-card h3 {
+            font-family: 'Open Sans', sans-serif; /* Style plus direct pour les titres de jeux */
+            font-size: 1.5em;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            text-align: left; /* Alignement à gauche pour les titres de cartes */
+        }
+
+        .game-card p {
+            font-size: 0.95em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Bouton "Jouer" */
+        .btn-play {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: auto; /* Pour le pousser en bas de la carte */
+        }
+
+        .btn-play:hover {
+            background-color: #8bbdc2; /* Une nuance plus foncée de l'accent */
+            transform: translateY(-2px);
+        }
+
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px; /* Espace au-dessus du footer */
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        /* --- Modale pour les Jeux --- */
+        .modal {
+            display: none; /* Caché par défaut */
+            position: fixed; /* Reste en place même en scrollant */
+            z-index: 1000; /* Au-dessus de tout le reste */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Permet le scroll si le contenu est trop grand */
+            background-color: rgba(0, 0, 0, 0.6); /* Fond sombre semi-transparent */
+            display: flex; /* Utilise flexbox pour centrer la modale */
+            justify-content: center;
+            align-items: center;
+            padding: 20px; /* Padding pour éviter que la modale colle aux bords sur mobile */
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: auto; /* Centre la boîte sur la page */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            position: relative;
+            max-width: 700px;
+            width: 90%; /* Prend 90% de la largeur disponible */
+            animation: fadeIn 0.3s ease-out; /* Petite animation à l'ouverture */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right; /* Aligne le bouton X à droite */
+            font-size: 36px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--secondary-color);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #modal-game-title {
+            font-size: 2.2em;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            padding-right: 30px; /* Pour laisser de la place au bouton de fermeture */
+            text-align: center;
+        }
+
+        #modal-game-instructions p {
+            text-align: justify;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            color: #444;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .site-title {
+                margin-bottom: 15px;
+                font-size: 2.2em;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding-top: 10px;
+            }
+
+            nav ul li {
+                margin: 5px 0;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            h2 {
+                font-size: 2em;
+            }
+
+            .game-grid {
+                grid-template-columns: 1fr;
+                padding: 0;
+            }
+
+            .game-card {
+                margin: 0 10px; /* Marge latérale pour les cartes sur mobile */
+            }
+
+            .section-content {
+                padding: 20px;
+            }
+        }
+
+        /* Responsive pour la modale sur petits écrans */
+        @media (max-width: 600px) {
+            .modal-content {
+                padding: 20px;
+            }
+            .close-button {
+                font-size: 30px;
+                top: 5px;
+                right: 15px;
+            }
+            #modal-game-title {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <a href="#accueil" class="site-title">Couple</a>
+            <nav>
+                <ul>
+                    <li><a href="#accueil" data-section="accueil">Accueil</a></li>
+                    <li><a href="#conseils-section" data-section="conseils-section">Conseils de Rencontre</a></li>
+                    <li><a href="#jeux-section" data-section="jeux-section">Nos Jeux de Couple</a></li>
+                    <li><a href="#apropos-section" data-section="apropos-section">À Propos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="accueil" class="main-section">
+            <div class="container">
+                <h1>Bienvenue sur notre espace Couple</h1>
+                <div class="section-content">
+                    <p>Découvrez notre sélection de conseils pour cultiver l'amour et le rire, ainsi que des jeux amusants pour les couples.</p>
+                    <p>Chaque relation est une aventure unique, pleine de moments à chérir et de défis à surmonter. Nous espérons que ce site vous apportera de l'inspiration, des sourires et des idées pour enrichir votre propre parcours amoureux.</p>
+                    <img src="https://via.placeholder.com/600x350/E0A3A7/FFFFFF?text=Votre+belle+photo+ici" alt="Photo de couple" style="max-width: 100%; height: auto; border-radius: 10px; margin-top: 30px;">
+                    <p style="margin-top: 30px; font-style: italic;">"L'amour ne se trouve pas, il se construit, chaque jour."</p>
+                </div>
+            </div>
+        </section>
+
+        ---
+
+        <section id="conseils-section" class="main-section">
+            <div class="container">
+                <h2>Techniques pour des Rencontres Réussies</h2>
+                <div class="section-content">
+                    <p class="introduction-jeux" style="margin-bottom: 30px;">
+                        Que ce soit pour une première rencontre ou pour raviver la flamme, une bonne communication est la clé. Voici nos astuces pour des échanges mémorables et des connexions plus profondes.
+                    </p>
+
+                    <div class="conseil-card">
+                        <h3>1. Briser la Glace avec Confiance</h3>
+                        <ul>
+                            <li>**Le Sourire Sincère :** Un sourire authentique est le meilleur "ice-breaker".</li>
+                            <li>**Questions Ouvertes :** Évitez les questions par oui/non. Ex: "Qu'est-ce qui t'a amené ici ?" ou "Quelle est ta passion principale ?"</li>
+                            <li>**L'Observation :** Commentez un détail positif ou intéressant chez l'autre (ex: un livre, un accessoire, un air détendu).</li>
+                            <li>**Parler de Soi (brièvement) :** Partagez une petite anecdote légère pour créer une réciprocité.</li>
+                        </ul>
+                    </div>
+
+                    <div class="conseil-card">
+                        <h3>2. L'Art de l'Écoute Active</h3>
+                        <ul>
+                            <li>**Concentration Totale :** Éteignez les distractions. Regardez la personne dans les yeux.</li>
+                            <li>**Reformuler :** "Si j'ai bien compris, tu..." Cela montre que vous suivez et évite les malentendus.</li>
+                            <li>**Écouter pour Comprendre, pas pour Répondre :** Votre objectif est d'assimiler ce que l'autre exprime, pas de préparer votre prochaine réplique.</li>
+                            <li>**Ne pas Couper la Parole :** Laissez l'autre terminer ses pensées.</li>
+                        </ul>
+                    </div>
+
+                    <div class="conseil-card">
+                        <h3>3. Maintenir une Connexion Profonde</h3>
+                        <ul>
+                            <li>**Intérêt Genuin :** Posez des questions de suivi sur ce qu'ils ont dit.</li>
+                            <li>**Vulnérabilité Partagée :** Partagez des émotions, des peurs ou des espoirs (à petites doses au début).</li>
+                            <li>**L'Humour :** Utilisez l'humour pour détendre l'atmosphère et créer de la complicité.</li>
+                            <li>**Le Langage Corporel :** Miroir (discrètement) la posture de l'autre, maintenez un contact visuel approprié.</li>
+                        </ul>
+                    </div>
+
+                    <div class="conseil-card">
+                        <h3>4. Les Erreurs Courantes à Éviter</h3>
+                        <ul>
+                            <li>**Parler Trop de Soi :** L'équilibre est clé.</li>
+                            <li>**Utiliser son Téléphone :** Un grand "non" pendant une rencontre.</li>
+                            <li>**Juger ou Critiquer :** Restez ouvert et positif.</li>
+                            <li>**Forcer les Choses :** Laissez la conversation et la connexion se développer naturellement.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        ---
+
+        <section id="jeux-section" class="main-section">
+            <div class="container">
+                <h2>Nos Jeux de Couple pour s'Amuser et se Connec</h2>
+                <div class="section-content">
+                    <p class="introduction-jeux">
+                        Découvrez nos jeux préférés pour pimenter votre relation, rire ensemble et apprendre à vous connaître encore mieux. Idéal pour un rendez-vous à la maison ou un moment de détente ! Cliquez sur "Jouer" pour les règles complètes !
+                    </p>
+
+                    <div class="game-grid">
+                        <div class="game-card">
+                            <h3>1. Qui est le plus probable de... ?</h3>
+                            <p>À tour de rôle, posez une question commençant par "Qui est le plus probable de... ?". Les deux partenaires pointent du doigt la personne qui correspond le mieux. Rires garantis !</p>
+                            <button class="btn-play" data-game-id="qui-plus-probable">Jouer</button>
+                        </div>
+
+                        <div class="game-card">
+                            <h3>2. La Minute Compliment</h3>
+                            <p>Fixez-vous l'un l'autre pendant une minute, puis passez la minute suivante à dire tout ce que vous aimez et admirez chez l'autre, sans interruption.</p>
+                            <button class="btn-play" data-game-id="minute-compliment">Jouer</button>
+                        </div>
+
+                        <div class="game-card">
+                            <h3>3. Deux Vérités et Un Mensonge</h3>
+                            <p>Chacun énonce trois affirmations sur lui-même : deux vraies et une fausse. L'autre doit deviner laquelle est le mensonge.</p>
+                            <button class="btn-play" data-game-id="deux-verites-un-mensonge">Jouer</button>
+                        </div>
+
+                        <div class="game-card">
+                            <h3>4. 20 Questions (Version Couple)</h3>
+                            <p>Pensez à un souvenir commun, un objet ou une habitude de l'autre. L'autre doit poser jusqu'à 20 questions pour deviner, avec des réponses par oui ou non.</p>
+                            <button class="btn-play" data-game-id="20-questions-couple">Jouer</button>
+                        </div>
+
+                        <div class="game-card">
+                            <h3>5. Le Défi Culinaire à l'Aveugle</h3>
+                            <p>Bandez les yeux de votre partenaire et faites-lui goûter différents aliments ou boissons. Il/elle doit deviner ce que c'est.</p>
+                            <button class="btn-play" data-game-id="defi-culinaire-aveugle">Jouer</button>
+                        </div>
+
+                        <div class="game-card">
+                            <h3>6. Le Dessin Mystère</h3>
+                            <p>Chacun dessine quelque chose sans que l'autre ne voie. Puis, décrivez-le et voyez si l'autre arrive à le reproduire ou à deviner.</p>
+                            <button class="btn-play" data-game-id="dessin-mystere">Jouer</button>
+                        </div>
+
+                        <div class="game-card">
+                            <h3>7. La Liste de Souhaits Partagés</h3>
+                            <p>Écrivez chacun 5 choses que vous rêveriez de faire ensemble. Comparez vos listes et voyez combien de souhaits se recoupent !</p>
+                            <button class="btn-play" data-game-id="liste-souhaits-partages">Jouer</button>
+                        </div>
+
+                        <div class="game-card">
+                            <h3>8. Le Qui-suis-je du Couple</h3>
+                            <p>Écrivez sur des papiers des souvenirs, surnoms, ou habitudes. Piochez-les et devinez de quoi il s'agit, ou racontez l'histoire liée.</p>
+                            <button class="btn-play" data-game-id="qui-suis-je-couple">Jouer</button>
+                        </div>
+
+                        <div class="game-card">
+                            <h3>9. Le Questionnaire Profond</h3>
+                            <p>Préparez une liste de questions plus intimes ou philosophiques. Répondez-y chacun à votre tour, en toute honnêteté.</p>
+                            <button class="btn-play" data-game-id="questionnaire-profond">Jouer</button>
+                        </div>
+
+                        <div class="game-card">
+                            <h3>10. Échange de Rôles pour une Journée</h3>
+                            <p>Choisissez une journée où vous allez échanger vos "rôles" ou vos tâches habituelles. Un défi amusant pour comprendre la vie de l'autre !</p>
+                            <button class="btn-play" data-game-id="echange-roles-journee">Jouer</button>
+                        </div>
+
+                        <div class="game-card">
+                            <h3>11. Le Meilleur Souvenir de Nous Deux</h3>
+                            <p>Chacun pense à son souvenir préféré de votre relation et le partage en détail. Expliquez pourquoi ce moment est si spécial pour vous.</p>
+                            <button class="btn-play" data-game-id="meilleur-souvenir">Jouer</button>
+                        </div>
+
+                        <div class="game-card">
+                            <h3>12. Le Prix du Pire Goût</h3>
+                            <p>Choisissez un film, une chanson ou un plat que l'autre déteste et essayez de le "vendre" comme génial ! Le but est de faire rire !</p>
+                            <button class="btn-play" data-game-id="pire-gout">Jouer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        ---
+
+        <section id="apropos-section" class="main-section">
+            <div class="container">
+                <h2>À Propos de nous</h2>
+                <div class="section-content">
+                    <p>Nous sommes passionnés par les relations et le bonheur qu'elles procurent. Ce site est une ressource pour tous les couples qui cherchent à renforcer leurs liens, à rire ensemble et à explorer de nouvelles facettes de leur relation.</p>
+                    <p>Nous croyons que chaque relation mérite d'être cultivée avec soin, humour et intention. Nous espérons que les conseils et les jeux que nous avons partagés ici vous aideront à créer encore plus de souvenirs précieux avec votre partenaire.</p>
+                    <p style="text-align: center; margin-top: 30px; font-style: italic;">Merci de faire partie de notre communauté Couple !</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Couple. Tous droits réservés.</p>
+    </footer>
+
+    <div id="game-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-game-title"></h2>
+            <div id="modal-game-instructions">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Logique pour la navigation fluide et l'activation des liens ---
+            const navLinks = document.querySelectorAll('nav ul li a');
+            const sections = document.querySelectorAll('.main-section'); // Toutes les sections principales
+
+            // Fonction pour observer les sections et activer le lien de nav
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.5 // quand 50% de la section est visible
+            };
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Supprimer la classe 'active' de tous les liens
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        // Ajouter la classe 'active' au lien correspondant à la section visible
+                        const targetId = entry.target.id;
+                        const activeLink = document.querySelector(`nav ul li a[href="#${targetId}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            // Gérer le clic sur les liens de navigation pour le scroll doux
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault(); // Empêche le comportement par défaut (saut direct)
+                    const targetId = this.getAttribute('href').substring(1); // Enlève le '#'
+                    const targetSection = document.getElementById(targetId);
+
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - document.querySelector('header').offsetHeight, // Ajuste pour le header collant
+                            behavior: 'smooth' // Pour un défilement fluide
+                        });
+                    }
+                });
+            });
+
+
+            // --- Logique pour les jeux interactifs ---
+            const gameModal = document.getElementById('game-modal');
+            const closeButton = document.querySelector('.close-button');
+            const modalGameTitle = document.getElementById('modal-game-title');
+            const modalGameInstructions = document.getElementById('modal-game-instructions');
+            const playButtons = document.querySelectorAll('.btn-play');
+
+            // Mappe les ID des jeux à leur contenu détaillé (textuel ou HTML)
+            const gameContent = {
+                "qui-plus-probable": {
+                    title: "Qui est le plus probable de... ?",
+                    instructions: `
+                        <p><strong>Règles :</strong> Chacun à votre tour, posez une question commençant par "Qui est le plus probable de... ?" (ex: "...d'oublier son anniversaire ?"). Les deux partenaires pointent du doigt la personne qu'ils pensent être la plus susceptible de faire cette chose. Si vous pointez tous les deux la même personne, c'est encore plus drôle !</p>
+                        <p><strong>Variante :</strong> Celui qui est pointé doit raconter une anecdote qui justifie le choix.</p>
+                        <p>Amusez-vous bien !</p>
+                    `
+                },
+                "minute-compliment": {
+                    title: "La Minute Compliment",
+                    instructions: `
+                        <p><strong>Règles :</strong> Asseyez-vous face à face. Le premier partenaire a une minute (utilisez un minuteur sur votre téléphone !) pour dire tout ce qu'il aime et admire chez l'autre, sans interruption. Ensuite, inversez les rôles. L'objectif est d'être sincère et de remplir le cœur de l'autre.</p>
+                        <p><strong>Conseil :</strong> Concentrez-vous sur des qualités spécifiques ou des actions récentes.</p>
+                    `
+                },
+                "deux-verites-un-mensonge": {
+                    title: "Deux Vérités et Un Mensonge",
+                    instructions: `
+                        <p><strong>Règles :</strong> Prenez une feuille et un stylo chacun. Écrivez trois affirmations sur vous-même : deux qui sont absolument vraies, et une qui est un mensonge. À tour de rôle, lisez vos trois affirmations. L'autre doit deviner laquelle est le mensonge !</p>
+                        <p><strong>Astuce :</strong> Rendez le mensonge crédible et les vérités parfois surprenantes !</p>
+                    `
+                },
+                "20-questions-couple": {
+                    title: "20 Questions (Version Couple)",
+                    instructions: `
+                        <p><strong>Règles :</strong> Une personne pense à un souvenir partagé, un objet de votre maison qui a une signification, ou une habitude particulière de l'autre. L'autre personne pose des questions qui ne peuvent être répondues que par "oui" ou "non" (jusqu'à 20 questions) pour essayer de deviner.</p>
+                        <p><strong>Idées :</strong> "Est-ce lié à notre première rencontre ?", "Est-ce dans la cuisine ?", "Est-ce une chose que tu fais tous les matins ?"</p>
+                    `
+                },
+                "defi-culinaire-aveugle": {
+                    title: "Le Défi Culinaire à l'Aveugle",
+                    instructions: `
+                        <p><strong>Règles :</strong> Sélectionnez quelques aliments ou boissons (fruits, fromages, épices, jus, chocolat...) et préparez-les. Bander les yeux de votre partenaire. À tour de rôle, faites-lui goûter un aliment et il doit deviner ce que c'est. Faites attention aux allergies !</p>
+                        <p><strong>Amusant :</strong> Filmez les réactions !</p>
+                    `
+                },
+                "dessin-mystere": {
+                    title: "Le Dessin Mystère",
+                    instructions: `
+                        <p><strong>Règles :</strong> Chacun prend une feuille et un stylo. Dessinez secrètement un objet, un lieu ou une idée. Sans montrer votre dessin, décrivez-le à votre partenaire (sans nommer l'objet !). Votre partenaire essaie de le dessiner en suivant vos instructions. Comparez ensuite les dessins, les résultats sont souvent hilarants !</p>
+                    `
+                },
+                "liste-souhaits-partages": {
+                    title: "La Liste de Souhaits Partagés",
+                    instructions: `
+                        <p><strong>Règles :</strong> Sur une feuille, écrivez chacun 5 choses que vous rêveriez de faire ensemble, qu'il s'agisse d'un voyage lointain, d'une nouvelle compétence à apprendre, ou d'une expérience unique. Une fois vos listes complètes, partagez-les et discutez de ce qui se chevauche et de ce qui vous surprend l'un chez l'autre.</p>
+                    `
+                },
+                "qui-suis-je-couple": {
+                    title: "Le Qui-suis-je du Couple",
+                    instructions: `
+                        <p><strong>Règles :</strong> Écrivez sur des petits papiers des noms de souvenirs communs, des surnoms que vous vous donnez, des expressions internes, ou des moments clés de votre relation. Pliez les papiers et mettez-les dans un chapeau. À tour de rôle, piochez un papier et sans regarder, collez-le sur votre front. L'autre personne donne des indices jusqu'à ce que vous devinez ce qu'il y a sur le papier.</p>
+                    `
+                },
+                "questionnaire-profond": {
+                    title: "Le Questionnaire Profond",
+                    instructions: `
+                        <p><strong>Règles :</strong> Préparez une liste de questions qui invitent à la réflexion et à l'ouverture. Exemples : "Quel est ton rêve le plus fou ?", "Qu'est-ce qui te rend le plus fier(e) de nous ?", "Quelle est une leçon importante que tu as apprise cette année ?". Répondez-y sincèrement, en vous donnant le temps d'écouter et de comprendre.</p>
+                        <p><strong>Conseil :</strong> Pas de jugement, juste de l'écoute et du partage.</p>
+                    `
+                },
+                "echange-roles-journee": {
+                    title: "Échange de Rôles pour une Journée",
+                    instructions: `
+                        <p><strong>Règles :</strong> Planifiez une journée (ou une demi-journée) où vous échangerez vos "rôles" habituels. Si l'un gère le dîner, l'autre prend le relais. Si l'un s'occupe de telle tâche ménagère, l'autre la fait. C'est une excellente façon de se mettre à la place de l'autre et de découvrir de nouvelles perspectives.</p>
+                    `
+                },
+                "meilleur-souvenir": {
+                    title: "Le Meilleur Souvenir de Nous Deux",
+                    instructions: `
+                        <p><strong>Règles :</strong> Prenez un moment chacun pour penser à votre souvenir préféré de votre relation. Partagez-le ensuite en détail avec votre partenaire, en expliquant pourquoi ce moment est si spécial pour vous, ce que vous avez ressenti, et pourquoi il reste gravé dans votre mémoire. C'est un excellent moyen de revivre vos moments heureux.</p>
+                    `
+                },
+                "pire-gout": {
+                    title: "Le Prix du Pire Goût",
+                    instructions: `
+                        <p><strong>Règles :</strong> C'est un jeu pour rire ! Chacun d'entre vous doit choisir un film, une chanson ou un plat que votre partenaire déteste absolument et essayer de le "vendre" comme étant la meilleure chose au monde. Inventez des arguments absurdes, défendez l'indéfendable. Le but est de faire rire l'autre aux éclats et de ne pas se prendre au sérieux.</p>
+                    `
+                }
+            };
+
+            // Ouvre la modale quand on clique sur un bouton "Jouer"
+            playButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const gameId = button.dataset.gameId;
+                    const content = gameContent[gameId];
+
+                    if (content) {
+                        modalGameTitle.textContent = content.title;
+                        modalGameInstructions.innerHTML = content.instructions; // Utiliser innerHTML pour le HTML dans les instructions
+                        gameModal.style.display = 'flex'; // Affiche la modale (flex pour centrer)
+                    } else {
+                        modalGameTitle.textContent = "Jeu non trouvé";
+                        modalGameInstructions.innerHTML = "<p>Désolé, les instructions pour ce jeu ne sont pas encore disponibles.</p>";
+                        gameModal.style.display = 'flex';
+                    }
+                });
+            });
+
+            // Ferme la modale quand on clique sur le X
+            closeButton.addEventListener('click', () => {
+                gameModal.style.display = 'none';
+            });
+
+            // Ferme la modale si on clique en dehors de son contenu
+            window.addEventListener('click', (event) => {
+                if (event.target === gameModal) {
+                    gameModal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
